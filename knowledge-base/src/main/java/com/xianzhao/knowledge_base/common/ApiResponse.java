@@ -15,6 +15,11 @@ public class ApiResponse<T> {
         this.data=data;
     }
 
+    // 使用T，表示data类型暂定，这是一个泛型方法，接受一个T类型的数据
+    // 并返回一个包着T的ApiResponse
+    // 这是一个类型占位符
+    // 用的时候才决定T是什么
+    // 让接口返回更加安全，清晰，专业
     public static <T> ApiResponse<T> error(int code,String message){
         return new ApiResponse<>(code,message,null);
     }
