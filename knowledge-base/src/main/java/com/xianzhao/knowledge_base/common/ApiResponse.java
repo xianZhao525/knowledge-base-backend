@@ -20,6 +20,10 @@ public class ApiResponse<T> {
     // 这是一个类型占位符
     // 用的时候才决定T是什么
     // 让接口返回更加安全，清晰，专业
+    public static <T> ApiResponse<T> success(T data){
+        return new ApiResponse<>(0,"success",data);
+    }
+    
     public static <T> ApiResponse<T> error(int code,String message){
         return new ApiResponse<>(code,message,null);
     }
