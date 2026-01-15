@@ -17,7 +17,7 @@ public class Knowledge {
         return id;
     }
 
-    public void setIdf(Long id){
+    public void setId(Long id){
         this.id=id;
     }
 
