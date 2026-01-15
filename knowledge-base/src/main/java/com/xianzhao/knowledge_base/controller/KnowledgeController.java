@@ -3,6 +3,7 @@ package com.xianzhao.knowledge_base.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.xianzhao.knowledge_base.common.ApiResponse;
 import com.xianzhao.knowledge_base.entity.Knowledge;
 import com.xianzhao.knowledge_base.service.KnowledgeService;
 
@@ -35,8 +36,11 @@ public class KnowledgeController {
     //等价于@RequestMapping(value = "/test", method = RequestMethod.GET)
     // 这是因为Spring Boot帮我们简化了
     @GetMapping("/test")
-    public Knowledge test(){
-        return knowledgeService.createDemoKnowledge();
+    // 意味着：外层是统一格式,内层是业务数据
+    // 这就是：“接口协议”和“业务模型”解耦
+    public ApiResponse<Knowledge> test(){
+        Knowledge knowledge=knowledgeService.createDemoKnowledge();
+        return ApiResponse.success(knowledge);
     }
     
 }
