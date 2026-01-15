@@ -8,14 +8,17 @@ import com.xianzhao.knowledge_base.entity.Knowledge;
 import com.xianzhao.knowledge_base.service.KnowledgeService;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.swing.Spring;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 // 表明这是一个控制器类，类中的方法是对外提供接口的，但绘制并不是页面而是json数据
 @RestController
+
 //表明给这个Controller统一加一个前缀路径，等价于这个类下面所有接口都以/knowledge开头
 //在真实项目中会有很多模块，使用这种方法的话可以使结构清晰，一眼就知道接口是属于哪一块业务
 @RequestMapping("/knowledge")
@@ -36,11 +39,38 @@ public class KnowledgeController {
     //等价于@RequestMapping(value = "/test", method = RequestMethod.GET)
     // 这是因为Spring Boot帮我们简化了
     @GetMapping("/test")
+
     // 意味着：外层是统一格式,内层是业务数据
     // 这就是：“接口协议”和“业务模型”解耦
     public ApiResponse<Knowledge> test(){
-        Knowledge knowledge=knowledgeService.createDemoKnowledge();
-        return ApiResponse.success(knowledge);
+        return ApiResponse.success(knowledgeService.createDemoKnowledge());
     }
     
+    @GetMapping("/list")
+    // Controller 返回的是：
+    // ApiResponse<List<Knowledge>>
+    // 意味着：外层统一格式,内层是列表,这是泛型的嵌套使用
+    public ApiResponse<List<Knowledge>> list(){
+
+        // 只做三件事：
+        // 接请求
+        // 调 Service
+        // 包装返回
+        // 这叫：薄 Controller，厚 Service,是后端项目的黄金准则。
+        List<Knowledge> list=knowledgeService.listKnowledge();
+        return ApiResponse.success(list);
+    }
+
+    //URL 中的 {id} 是一个占位符
+    // 当访问：GET /knowledge/1
+    // Spring 会理解为：id = 1
+    @GetMapping("/{id}")
+    //告知了参数 id 是从 URL 路径中的{id}获取的
+    public ApiResponse<Knowledge> detail(@PathVariable Long id){
+        Knowledge knowledge=knowledgeService.getById(id);
+
+        //外层：接口协议（code / message）
+        //内层：业务数据（Knowledge）
+        return ApiResponse.success(knowledge);
+    }
 }
