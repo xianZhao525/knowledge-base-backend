@@ -4,8 +4,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xianzhao.knowledge_base.entity.Knowledge;
+import com.xianzhao.knowledge_base.service.KnowledgeService;
 
 import java.time.LocalDateTime;
+
+import javax.swing.Spring;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,17 +21,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 public class KnowledgeController {
 
+    private final KnowledgeService knowledgeService;
+
+    //Controller 需要用 KnowledgeService，
+    // 但不自己创建，
+    // 而是让 Spring 注入进来
+    // 这叫：构造器注入
+    public KnowledgeController(KnowledgeService knowledgeService) {
+        this.knowledgeService = knowledgeService;
+    }
+    
     //当有人用Get请求访问/knowledge/test 时，执行这个方法
     //等价于@RequestMapping(value = "/test", method = RequestMethod.GET)
     // 这是因为Spring Boot帮我们简化了
     @GetMapping("/test")
     public Knowledge test(){
-        Knowledge k=new Knowledge();
-        k.setId(1L);
-        k.setTitle("Spring Boot 入门");
-        k.setContent("这是我的第一个项目");
-        k.setCreatedAt(LocalDateTime.now());
-        return k;
+        return knowledgeService.createDemoKnowledge();
     }
     
 }
