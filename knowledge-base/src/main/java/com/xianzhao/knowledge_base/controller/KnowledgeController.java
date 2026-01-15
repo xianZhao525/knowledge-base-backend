@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xianzhao.knowledge_base.common.ApiResponse;
+import com.xianzhao.knowledge_base.dto.KnowledgeCreateRequest;
 import com.xianzhao.knowledge_base.entity.Knowledge;
 import com.xianzhao.knowledge_base.service.KnowledgeService;
 
@@ -14,6 +15,8 @@ import javax.swing.Spring;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 // 表明这是一个控制器类，类中的方法是对外提供接口的，但绘制并不是页面而是json数据
@@ -71,6 +74,17 @@ public class KnowledgeController {
 
         //外层：接口协议（code / message）
         //内层：业务数据（Knowledge）
+        return ApiResponse.success(knowledge);
+    }
+
+    //@PostMapping
+    //HTTP POST,路径 = /knowledge
+    @PostMapping
+    
+    // @RequestBody KnowledgeCreateRequest request
+    // Spring 自动把 JSON 转成 Java 对象
+    public ApiResponse<Knowledge> create(@RequestBody KnowledgeCreateRequest request){
+        Knowledge knowledge=knowledgeService.create(request);
         return ApiResponse.success(knowledge);
     }
 }

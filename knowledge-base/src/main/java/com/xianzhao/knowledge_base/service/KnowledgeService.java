@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+
+import com.xianzhao.knowledge_base.dto.KnowledgeCreateRequest;
 import com.xianzhao.knowledge_base.entity.Knowledge;
 
 //告诉Spring：这是一个业务组件，请你在启动时帮我创建并管理这个对象
@@ -68,4 +70,12 @@ public class KnowledgeService {
         //Controller 层 不能直接把 null 返回给前端
     }
 
+    public Knowledge create(KnowledgeCreateRequest request){
+        Knowledge knowledge=new Knowledge();
+        knowledge.setId(System.currentTimeMillis());
+        knowledge.setTitle(request.getTitle());
+        knowledge.setContent(request.getContent());
+        knowledge.setCreatedAt(LocalDateTime.now());
+        return knowledge;
+    }
 }
