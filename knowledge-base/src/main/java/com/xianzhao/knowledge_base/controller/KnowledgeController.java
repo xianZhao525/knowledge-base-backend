@@ -10,8 +10,7 @@ import com.xianzhao.knowledge_base.service.KnowledgeService;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import javax.swing.Spring;
+import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -83,7 +82,12 @@ public class KnowledgeController {
     
     // @RequestBody KnowledgeCreateRequest request
     // Spring 自动把 JSON 转成 Java 对象
-    public ApiResponse<Knowledge> create(@RequestBody KnowledgeCreateRequest request){
+    // public ApiResponse<Knowledge> create(@RequestBody KnowledgeCreateRequest request){
+    //     Knowledge knowledge=knowledgeService.create(request);
+    //     return ApiResponse.success(knowledge);
+    // }
+
+    public ApiResponse<Knowledge> create(@Valid @RequestBody KnowledgeCreateRequest request){
         Knowledge knowledge=knowledgeService.create(request);
         return ApiResponse.success(knowledge);
     }
