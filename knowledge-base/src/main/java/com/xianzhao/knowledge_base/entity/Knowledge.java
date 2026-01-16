@@ -29,6 +29,9 @@ public class Knowledge {
     @Column(name = "created_at")
     private LocalDateTime createdAt;//创建时间
 
+    private String author;
+    private String status;
+
     public Knowledge(){
 
     }
@@ -63,5 +66,21 @@ public class Knowledge {
 
     public void setCreatedAt(LocalDateTime createdAt){
         this.createdAt=createdAt;
+    }
+
+    public String getAuthor(){
+        return author;
+    }
+
+    public void setAuthor(String author){
+        this.author=author;
+    }
+
+    public String getStatus(){
+        return status;
+    }
+
+    public void setStatus(String status){
+        this.status=status;
     }
 }

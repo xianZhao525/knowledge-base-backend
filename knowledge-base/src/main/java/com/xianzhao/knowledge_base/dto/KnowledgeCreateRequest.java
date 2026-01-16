@@ -11,6 +11,8 @@ public class KnowledgeCreateRequest {
     private String title;
     @NotBlank(message="content不能为空")
     private String content;
+    @NotBlank(message="author不能为空")
+    private String author;
 
     //Spring通过它反射取值
     public String getTitle(){
@@ -27,5 +29,13 @@ public class KnowledgeCreateRequest {
 
     public void setContent(String content){
         this.content=content;
+    }
+
+    public String getAuthor(){
+        return author;
+    }
+
+    public void setAuthor(String author){
+        this.author=author;
     }
 }

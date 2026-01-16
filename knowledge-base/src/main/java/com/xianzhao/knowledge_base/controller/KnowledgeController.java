@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import jakarta.validation.Valid;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,13 +41,13 @@ public class KnowledgeController {
     //当有人用Get请求访问/knowledge/test 时，执行这个方法
     //等价于@RequestMapping(value = "/test", method = RequestMethod.GET)
     // 这是因为Spring Boot帮我们简化了
-    @GetMapping("/test")
+    // @GetMapping("/test")
 
     // 意味着：外层是统一格式,内层是业务数据
     // 这就是：“接口协议”和“业务模型”解耦
-    public ApiResponse<Knowledge> test(){
-        return ApiResponse.success(knowledgeService.createDemoKnowledge());
-    }
+    // public ApiResponse<Knowledge> test(){
+    //     return ApiResponse.success(knowledgeService.createDemoKnowledge());
+    // }
     
     @GetMapping("/list")
     // Controller 返回的是：
@@ -90,5 +91,17 @@ public class KnowledgeController {
     public ApiResponse<Knowledge> create(@Valid @RequestBody KnowledgeCreateRequest request){
         Knowledge knowledge=knowledgeService.create(request);
         return ApiResponse.success(knowledge);
+    }
+
+    @PostMapping("/{id}/publish")
+    public ApiResponse<Knowledge> publish(@PathVariable Long id){
+        Knowledge knowledge=knowledgeService.publish(id);
+        return ApiResponse.success(knowledge);
+    }
+    
+    @DeleteMapping("/{id}")
+    public ApiResponse<Void> delete(@PathVariable Long id){
+        knowledgeService.delete(id);
+        return ApiResponse.success(null);
     }
 }
